@@ -1,0 +1,8 @@
+﻿  MatchManager.cpp
+C:\Users\lee\Documents\projects\RFT_Servers\RFT_MatchingServer\MatchManager.cpp(50,32): warning C4267: '=': 'size_t'에서 'short'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  RFT_IOCP_MatchingServer.cpp
+C:\Users\lee\Documents\projects\RFT_Servers\RFT_MatchingServer\RFT_IOCP_MatchingServer.cpp(38,18): warning C4267: '+=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\lee\Documents\projects\RFT_Servers\RFT_MatchingServer\RFT_IOCP_MatchingServer.cpp(57,18): warning C4267: '+=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  main.cpp
+  코드를 생성하고 있습니다...
+  RFT_MatchingServer.vcxproj -> C:\Users\lee\Documents\projects\RFT_Servers\x64\Debug\RFT_MatchingServer.exe
