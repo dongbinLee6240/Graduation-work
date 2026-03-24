@@ -1,5 +1,6 @@
 #pragma once
 // winsock2 사용을 위해 아래 코멘트 추가
+// RFT_NetWorkUtility.h(헤더파일)
 #pragma comment(lib, "ws2_32.lib")
 #include <WinSock2.h>
 #include <windows.h>
