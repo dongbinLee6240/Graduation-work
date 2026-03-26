@@ -21,6 +21,12 @@ enum HeaderType : INT8
     MATCH_COMPLETE = 2
 };
 
+enum IO_TYPE
+{
+    IO_RECV,
+    IO_SEND
+};
+
 void PrintBufferHex(const char* buffer, size_t length);
 class Packet
 {

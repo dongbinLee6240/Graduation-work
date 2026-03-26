@@ -1,6 +1,7 @@
 #pragma once
 #include <queue>
 #include <vector>
+#include <mutex> //스레드 동기화를 위한 mutex 헤더
 #include <WinSock2.h>
 #include "RFT_IOCP_MatchingServer.h"
 
@@ -10,17 +11,16 @@
 class MatchManager
 {
 private:
-    static MatchManager* Instance;
 
     MatchManager();  // private 생성자
     ~MatchManager(); // private 소멸자
 
     std::queue<Player> playerQueue; // 대기열
     std::vector<Team> teams;        // 팀 목록
+    std::mutex m_mutex;
 
 public:
-    static MatchManager* GetInstance();
-    static void DestroyInstance();
+    static MatchManager& GetInstance();
 
     void MatchPlayers();                  // 매칭 로직
     void SendMatchCompletePackets();      // 매칭 완료 패킷 전송

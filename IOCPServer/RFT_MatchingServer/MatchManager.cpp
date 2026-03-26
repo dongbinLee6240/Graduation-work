@@ -2,40 +2,20 @@
 #include <algorithm>
 #include <cstdio>
 
-MatchManager* MatchManager::Instance = nullptr;
-
 MatchManager::MatchManager()
 {
     printf("[INFO] MatchManager가 초기화되었습니다.\n");
-    while (!playerQueue.empty())
-        playerQueue.pop();
-    teams.clear();
 }
 
 MatchManager::~MatchManager()
 {
     printf("[INFO] MatchManager가 종료되었습니다.\n");
-    while (!playerQueue.empty())
-        playerQueue.pop();
-    teams.clear();
 }
 
-MatchManager* MatchManager::GetInstance()
+MatchManager& MatchManager::GetInstance() //Meyers' Singleton패턴 참고
 {
-    if (!Instance)
-    {
-        Instance = new MatchManager();
-    }
-    return Instance;
-}
-
-void MatchManager::DestroyInstance()
-{
-    if (Instance)
-    {
-        delete Instance;
-        Instance = nullptr;
-    }
+    static MatchManager instance;
+    return instance;
 }
 
 void Packet::MatchCompletePacket(Packet* packet, char* buffer)
@@ -60,22 +40,19 @@ void MatchManager::addPlayerToQueue(const Packet& packet, SOCKET ClientSocket)
     player.cid = packet.data;  // 패킷에서 UID 추출
     player.socket = ClientSocket;
 
+    //함수 내에서 큐에 접근하기 전 Lock을 건다.
+    std::lock_guard<std::mutex> lock(m_mutex);
+
     playerQueue.push(player);
     printf("[INFO] Player CID %s가 대기열에 추가되었습니다. 현재 대기열 크기: %zu\n", player.cid.c_str(), playerQueue.size());
 
-    // 현재 저장된 모든 플레이어의 소켓 출력
-    printf("[DEBUG] 현재 대기열에 있는 모든 플레이어 소켓 정보:\n");
-    std::queue<Player> tempQueue = playerQueue; // 대기열 복사본
-    while (!tempQueue.empty())
-    {
-        Player tempPlayer = tempQueue.front();
-        tempQueue.pop();
-        printf(" - Player CID: %s, Socket: %lld\n", tempPlayer.cid.c_str(), (long long)tempPlayer.socket);
-    }
 }
 
 void MatchManager::MatchPlayers()
 {
+    // 매칭 로직(큐와 벡터 수정) 전체를 보호
+    std::lock_guard<std::mutex> lock(m_mutex);
+
     while (!playerQueue.empty())
     {
         Player player = playerQueue.front();
@@ -120,6 +97,10 @@ void MatchManager::MatchPlayers()
         {
             printf("[INFO] 모든 팀이 완성되었습니다. 매칭 완료 패킷 전송.\n");
             SendMatchCompletePackets();
+            // 참고: SendMatchCompletePackets 함수도 m_mutex를 사용한다면 여기서 호출할 때
+            // 데드락(Deadlock)에 주의해야 합니다. lock_guard는 재귀적이지 않으므로
+            // SendMatchCompletePackets 내부에는 lock_guard를 빼거나 recursive_mutex를 써야 합니다.
+            // 여기서는 Send 함수가 이 함수 안에서 불리므로 Send 함수에는 lock을 걸지 않았습니다.
         }
     }
 }
@@ -130,44 +111,36 @@ void MatchManager::SendMatchCompletePackets()
     {
         for (const auto& player : team.players)
         {
-            char sendBuffer[BUFSIZE];
-            Packet matchCompletePacket;
+            
+            //WSASend를 위한 동적 할당. 워커 스레드에서 해제될 예정.
+            SOCKETINFO* pSendInfo = new SOCKETINFO();
+            ZeroMemory(pSendInfo, sizeof(SOCKETINFO)); // 초기화
 
-            matchCompletePacket.MatchCompletePacket(&matchCompletePacket, sendBuffer);
-
-            SOCKETINFO* pSocketInfo = new SOCKETINFO();
-            ZeroMemory(pSocketInfo, sizeof(SOCKETINFO)); // 초기화
-            pSocketInfo->socket = player.socket; //이부분에서 플레이어정보를 활요
-            printf("[DEBUG] Sending to Socket: %lld, Data: MatchComplete\n", (long long)player.socket);
+            pSendInfo->socket = player.socket; //이부분에서 플레이어정보를 활요
+            pSendInfo->ioType = IO_SEND; //이 소켓 작업은 send용으로 정의
+            
             // 데이터 버퍼 설정
-            pSocketInfo->dataBuf.buf = sendBuffer;
-            pSocketInfo->dataBuf.len = matchCompletePacket.length;
+            pSendInfo->dataBuf.buf = sendBuffer;
+            pSendInfo->dataBuf.len = matchCompletePacket.length;
 
             DWORD sendBytes;
-            //Send
+            //비동기 송신
             int result = WSASend(
                 player.socket,
-                &(pSocketInfo->dataBuf),
+                &(pSendInfo->dataBuf),
                 1,
                 &sendBytes,
                 0,
-                NULL,
+                &(pSendInfo->overlapped),
                 NULL
             );
 
-            if (result == SOCKET_ERROR)
+            if (result == SOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING)
             {
                 printf("[ERROR] 매칭 완료 패킷 전송 실패 - WSA Error: %d\n", WSAGetLastError());
+                delete pSendInfo; // 에러가 났을 때만 즉시 해제
             }
-            else
-            {
-                printf("[INFO] 메시지 송신 - Bytes: [%d], HeaderCode: [%d], Msg: [%s]\n",
-                    sendBytes,
-                    matchCompletePacket.headercode,
-                    sendBuffer);
-            }
-
-            delete pSocketInfo; // 메모리 해제
+            
         }
     }
 }

@@ -175,10 +175,9 @@ void IOCompletionPort::StartServer()
         ZeroMemory(pSocketInfo, sizeof(SOCKETINFO));
 
         pSocketInfo->socket = clientSocket;
-        pSocketInfo->recvBytes = 0;
-        pSocketInfo->sendBytes = 0;
         pSocketInfo->dataBuf.len = BUFSIZE;
         pSocketInfo->dataBuf.buf = pSocketInfo->messageBuffer;
+		pSocketInfo->ioType = IO_RECV;
 		//for(int i=0; i<sizeof(pSocketInfo))
 		printf("2. recv count: %d, (startserver)pSocketInfo->socket num: %lld\n", cnt, (long long)pSocketInfo->socket);
         // IOCP에 정확히 등록
@@ -249,74 +248,75 @@ bool IOCompletionPort::CreateWorkerThread()
 
 void IOCompletionPort::WorkerThread()
 {
-	//workerthread 얘는 저기 Getqueued completeionstatus가 있잖아요 저게 
-	//IOCP포트에서 작업이 완료될때까지 대기하는거에요 . 작업이 다되면 대기가 풀리고 아래 작업
-	//
 	BOOL bResult;
-	DWORD recvBytes = 0;
-	DWORD flags = 0;
-	SOCKETINFO* pSocketInfo; //이건 구조체에요 있어요 정보 그래서 pSocket
+	DWORD bytesTransferred = 0;
+	SOCKETINFO* pSocketInfo = NULL;
 
-	while (bWorkerThread) //while문
+	while (bWorkerThread)
 	{
-		//여기 hIOCP 보면 될거 같긴해요
-		// IOCP 큐에서 완료된 작업 가져오기 제가 말한게 얘에요 제 생각엔 이부분에서 
-		//클라1 소켓을 계속 사용해서 생기는 문제같아요 여기서 나온 소켓이 addplayer여기로가요
-		bResult = GetQueuedCompletionStatus(hIOCP, //즉 대기하다가 클라 연결하고 접속 받고 패킷 받고 하면 아래꺼 하는거에요
-			&recvBytes,
-			(PULONG_PTR)&pSocketInfo, //여기서 SocketInfo 사용해요
+		bResult = GetQueuedCompletionStatus(hIOCP,
+			&bytesTransferred,
+			(PULONG_PTR)&pSocketInfo,
 			(LPOVERLAPPED*)&pSocketInfo,
 			INFINITE);
-		printf("4. After GQCS pSocketInfo->socket Num: %lld\n", (long long)pSocketInfo->socket);
-		if (!bResult || recvBytes == 0) // 클라이언트 접속 끊김 처리
+
+		// [변경] 클라이언트 접속 종료 처리 조건 강화
+		if (!bResult || (bytesTransferred == 0 && pSocketInfo->ioType == IO_RECV))
 		{
-			printf_s("[INFO] Client Connect Close - Socket: %lld\n", (long long)pSocketInfo->socket);
+			printf_s("[INFO] Client Disconnected - Socket: %lld\n", (long long)pSocketInfo->socket);
 			closesocket(pSocketInfo->socket);
 			delete pSocketInfo;
 			continue;
 		}
-		// 수신된 데이터 처리
-		pSocketInfo->dataBuf.buf[recvBytes] = '\0'; // 문자열 끝 처리
-		printf_s("5. [INFO] Message Recv - Socket: %lld, Bytes: [%d], Msg: [%s]\n",
-			(long long)pSocketInfo->socket, recvBytes, pSocketInfo->dataBuf.buf);
-		//5번은 받은 메세지 끝에 널문자 넣어서 출력하게 했는데 이거는 계산 문제라 별 의미 없어요
-		// 패킷 처리 로직 실행
+
+		// [추가] 송신(SEND)이 완료된 경우의 처리
+		if (pSocketInfo->ioType == IO_SEND)
+		{
+			// 운영체제가 네트워크로 데이터를 다 보냈으므로 메모리 해제
+			printf_s("[INFO] Send Completed - Socket: %lld\n", (long long)pSocketInfo->socket);
+			delete pSocketInfo;
+			continue; // 다시 대기 상태로
+		}
+
+		// --- 여기서부터는 수신(RECV) 완료 처리 ---
+		pSocketInfo->dataBuf.buf[bytesTransferred] = '\0';
+
 		PacketMaker packetmaker;
 		Packet recvpacket = packetmaker.deserialize(pSocketInfo->dataBuf.buf);
-		MatchManager* matchManager = MatchManager::GetInstance();
+
+		// [변경] GetInstance() 참조 방식으로 호출
+		MatchManager& matchManager = MatchManager::GetInstance();
 
 		switch (recvpacket.headercode)
 		{
-		case REQ_MATCH: //패킷 헤더에 따른 함수 하게 해놨어요 IOCP부분에 문제가 있는건가
-			printf_s(" 6. [DEBUG] Call addPlayerToQueue - Socket: %lld\n", (long long)pSocketInfo->socket);
-			matchManager->addPlayerToQueue(recvpacket, pSocketInfo->socket);
-			matchManager->MatchPlayers();
+		case REQ_MATCH:
+			matchManager.addPlayerToQueue(recvpacket, pSocketInfo->socket);
+			matchManager.MatchPlayers();
 			break;
-
 		default:
 			printf_s("[ERROR] UnKnown HeaderCode: %d\n", recvpacket.headercode);
 			break;
 		}
 
-		// **다음 수신 작업 등록** (핵심 부분)
+		// 다음 RECV 작업 등록
 		ZeroMemory(&(pSocketInfo->overlapped), sizeof(OVERLAPPED));
 		pSocketInfo->recvBytes = 0;
 		pSocketInfo->dataBuf.len = BUFSIZE;
 		ZeroMemory(pSocketInfo->messageBuffer, BUFSIZE);
 		pSocketInfo->dataBuf.buf = pSocketInfo->messageBuffer;
+		pSocketInfo->ioType = IO_RECV; // 다시 RECV 모드로 설정
 
+		DWORD flags = 0;
 		int nResult = WSARecv(pSocketInfo->socket,
 			&(pSocketInfo->dataBuf),
 			1,
-			&recvBytes,
+			&bytesTransferred,
 			&flags,
 			&(pSocketInfo->overlapped),
 			NULL);
 
 		if (nResult == SOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING)
 		{
-			printf_s("[ERROR] WSARecv 실패 - Socket: %lld, WSA Error: %d\n",
-				(long long)pSocketInfo->socket, WSAGetLastError());
 			closesocket(pSocketInfo->socket);
 			delete pSocketInfo;
 		}
