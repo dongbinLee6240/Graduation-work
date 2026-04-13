@@ -11,7 +11,7 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- 3. characters 테이블 생성
+-- 3. characters 테이블 생성\
 CREATE TABLE characters (
     character_id VARCHAR(64) PRIMARY KEY,
     user_id VARCHAR(64),
@@ -20,3 +20,16 @@ CREATE TABLE characters (
     job VARCHAR(50),
     FOREIGN KEY (user_id) REFERENCES users(UID)
 );
+
+show databases;
+
+use usertable;
+
+show tables;
+
+describe users;
+
+desc characters;
+
+select * from users;
+select * from characters;
