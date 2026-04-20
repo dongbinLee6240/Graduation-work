@@ -2,6 +2,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #include "MatchManager.h"
+#include "RFT_PacketDefinitions.h"
 #include "RFT_IOCP_MatchingServer.h"
 #include <process.h>
 #include <iostream>
@@ -177,7 +178,9 @@ void IOCompletionPort::StartServer()
         pSocketInfo->socket = clientSocket;
         pSocketInfo->dataBuf.len = BUFSIZE;
         pSocketInfo->dataBuf.buf = pSocketInfo->messageBuffer;
-		pSocketInfo->ioType = IO_RECV;
+		pSocketInfo->io_type = IO_RECV;
+
+		//pSocketInfo이 recv한 횟수 + 소켓의 고유 번호
 		//for(int i=0; i<sizeof(pSocketInfo))
 		printf("2. recv count: %d, (startserver)pSocketInfo->socket num: %lld\n", cnt, (long long)pSocketInfo->socket);
         // IOCP에 정확히 등록
@@ -194,7 +197,7 @@ void IOCompletionPort::StartServer()
         recvBytes = 0;
         flags = 0;
 		cnt++;
-		/*printf("recv 횟수: %d, pSocketInfo->socket정보: %lld\n", cnt, (long long)pSocketInfo->socket);*/
+
         nResult = WSARecv(
             pSocketInfo->socket,
             &(pSocketInfo->dataBuf),
@@ -261,7 +264,7 @@ void IOCompletionPort::WorkerThread()
 			INFINITE);
 
 		// [변경] 클라이언트 접속 종료 처리 조건 강화
-		if (!bResult || (bytesTransferred == 0 && pSocketInfo->ioType == IO_RECV))
+		if (!bResult || (bytesTransferred == 0 && pSocketInfo->io_type == IO_RECV))
 		{
 			printf_s("[INFO] Client Disconnected - Socket: %lld\n", (long long)pSocketInfo->socket);
 			closesocket(pSocketInfo->socket);
@@ -270,7 +273,7 @@ void IOCompletionPort::WorkerThread()
 		}
 
 		// [추가] 송신(SEND)이 완료된 경우의 처리
-		if (pSocketInfo->ioType == IO_SEND)
+		if (pSocketInfo->io_type == IO_SEND)
 		{
 			// 운영체제가 네트워크로 데이터를 다 보냈으므로 메모리 해제
 			printf_s("[INFO] Send Completed - Socket: %lld\n", (long long)pSocketInfo->socket);
@@ -304,7 +307,7 @@ void IOCompletionPort::WorkerThread()
 		pSocketInfo->dataBuf.len = BUFSIZE;
 		ZeroMemory(pSocketInfo->messageBuffer, BUFSIZE);
 		pSocketInfo->dataBuf.buf = pSocketInfo->messageBuffer;
-		pSocketInfo->ioType = IO_RECV; // 다시 RECV 모드로 설정
+		pSocketInfo->io_type = IO_RECV; // 다시 RECV 모드로 설정
 
 		DWORD flags = 0;
 		int nResult = WSARecv(pSocketInfo->socket,

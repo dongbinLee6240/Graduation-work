@@ -1,2 +1,305 @@
-﻿  RFT_NetworkUtility.cpp
-C:\Users\ldb98\Documents\GitHub\Graduation-work\IOCPServer\RFT_IOCP_System\RFT_NetWorkUtils\RFT_NetworkUtility.cpp(74,1): error C1010: 미리 컴파일된 헤더를 찾는 동안 예기치 않은 파일의 끝이 나타났습니다. '#include "pch.h"'을(를) 소스에 추가하시겠습니까?
+﻿  Protocol.pb.cc
+C:\vcpkg\vcpkg\installed\x64-windows\include\absl\base\nullability.h(1,1): warning C4819: 현재 코드 페이지(949)에서 표시할 수 없는 문자가 파일에 들어 있습니다. 데이터가 손실되지 않게 하려면 해당 파일을 유니코드 형식으로 저장하십시오.
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\io\coded_stream.h(1307,28): warning C4251: 'google::protobuf::io::CodedOutputStream::default_serialization_deterministic_': 'std::atomic<bool>'에서는 'google::protobuf::io::CodedOutputStream'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\atomic(2131,8):
+      'std::atomic<bool>' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\port.h(734,23): warning C4251: 'google::protobuf::internal::RealDebugCounter::counter_': 'std::atomic<unsigned __int64>'에서는 'google::protobuf::internal::RealDebugCounter'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\atomic(2131,8):
+      'std::atomic<unsigned __int64>' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\serial_arena.h(393,28): warning C4251: 'google::protobuf::internal::SerialArena::head_': 'std::atomic<google::protobuf::internal::ArenaBlock *>'에서는 'google::protobuf::internal::SerialArena'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\atomic(2131,8):
+      'std::atomic<google::protobuf::internal::ArenaBlock *>' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\serial_arena.h(398,22): warning C4251: 'google::protobuf::internal::SerialArena::ptr_': 'std::atomic<char *>'에서는 'google::protobuf::internal::SerialArena'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\atomic(2131,8):
+      'std::atomic<char *>' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\serial_arena.h(403,23): warning C4251: 'google::protobuf::internal::SerialArena::space_allocated_': 'std::atomic<unsigned __int64>'에서는 'google::protobuf::internal::SerialArena'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\atomic(2131,8):
+      'std::atomic<unsigned __int64>' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\serial_arena.h(408,29): warning C4251: 'google::protobuf::internal::SerialArena::string_block_': 'std::atomic<google::protobuf::internal::StringBlock *>'에서는 'google::protobuf::internal::SerialArena'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\atomic(2131,8):
+      'std::atomic<google::protobuf::internal::StringBlock *>' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\serial_arena.h(414,23): warning C4251: 'google::protobuf::internal::SerialArena::string_block_unused_': 'std::atomic<unsigned __int64>'에서는 'google::protobuf::internal::SerialArena'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\atomic(2131,8):
+      'std::atomic<unsigned __int64>' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\serial_arena.h(417,22): warning C4251: 'google::protobuf::internal::SerialArena::cleanup_list_': 'google::protobuf::internal::cleanup::ChunkList'에서는 'google::protobuf::internal::SerialArena'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\arena_cleanup.h(60,7):
+      'google::protobuf::internal::cleanup::ChunkList' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\serial_arena.h(419,23): warning C4251: 'google::protobuf::internal::SerialArena::space_used_': 'std::atomic<unsigned __int64>'에서는 'google::protobuf::internal::SerialArena'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\atomic(2131,8):
+      'std::atomic<unsigned __int64>' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\thread_safe_arena.h(143,29): warning C4251: 'google::protobuf::internal::ThreadSafeArena::alloc_policy_': 'google::protobuf::internal::TaggedAllocationPolicyPtr'에서는 'google::protobuf::internal::ThreadSafeArena'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\arena_allocation_policy.h(41,7):
+      'google::protobuf::internal::TaggedAllocationPolicyPtr' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\thread_safe_arena.h(146,34): warning C4251: 'google::protobuf::internal::ThreadSafeArena::head_': 'std::atomic<google::protobuf::internal::ThreadSafeArena::SerialArenaChunk *>'에서는 'google::protobuf::internal::ThreadSafeArena'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\atomic(2131,8):
+      'std::atomic<google::protobuf::internal::ThreadSafeArena::SerialArenaChunk *>' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\thread_safe_arena.h(148,30): warning C4251: 'google::protobuf::internal::ThreadSafeArena::arena_stats_': 'google::protobuf::internal::ThreadSafeArenaStatsHandle'에서는 'google::protobuf::internal::ThreadSafeArena'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\arenaz_sampler.h(175,7):
+      'google::protobuf::internal::ThreadSafeArenaStatsHandle' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\thread_safe_arena.h(151,15): warning C4251: 'google::protobuf::internal::ThreadSafeArena::mutex_': 'absl::lts_20260107::Mutex'에서는 'google::protobuf::internal::ThreadSafeArena'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\vcpkg\vcpkg\installed\x64-windows\include\absl\synchronization\mutex.h(150,48):
+      'absl::lts_20260107::Mutex' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\thread_safe_arena.h(250,39): warning C4251: 'google::protobuf::internal::ThreadSafeArena::lifecycle_id_': 'std::atomic<unsigned __int64>'에서는 'google::protobuf::internal::ThreadSafeArena'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\atomic(2131,8):
+      'std::atomic<unsigned __int64>' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\arenastring.h(56,43): warning C4251: 'google::protobuf::internal::LazyString::inited_': 'std::atomic<const std::string *>'에서는 'google::protobuf::internal::LazyString'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\atomic(2131,8):
+      'std::atomic<const std::string *>' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\metadata_lite.h(249,15): warning C4251: 'google::protobuf::internal::LiteUnknownFieldSetter::buffer_': 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'에서는 'google::protobuf::internal::LiteUnknownFieldSetter'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\xstring(541,7):
+      'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\message_lite.h(244,31): warning C4251: 'google::protobuf::internal::CachedSize::atom_': 'std::atomic<int>'에서는 'google::protobuf::internal::CachedSize'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\atomic(2131,8):
+      'std::atomic<int>' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\message_lite.h(370,28): warning C4251: 'google::protobuf::internal::ClassData::message_creator': 'google::protobuf::internal::MessageCreator'에서는 'google::protobuf::internal::ClassData'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\message_lite.h(91,7):
+      'google::protobuf::internal::MessageCreator' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\micro_string.h(84,25): warning C4267: '=': 'size_t'에서 'uint32_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\micro_string.h(89,20): warning C4267: '=': 'size_t'에서 'uint32_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\micro_string.h(97,14): warning C4267: '=': 'size_t'에서 'uint32_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\repeated_ptr_field.h(1759,32): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\repeated_ptr_field.h(1764,54): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\repeated_ptr_field.h(1768,54): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\implicit_weak_message.h(85,32): warning C4251: 'google::protobuf::internal::ImplicitWeakMessage::table_': 'google::protobuf::internal::TcParseTable<0,0,0,0,2>'에서는 'google::protobuf::internal::ImplicitWeakMessage'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\generated_message_tctable_decl.h(516,8):
+      'google::protobuf::internal::TcParseTable<0,0,0,0,2>' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\implicit_weak_message.h(86,33): warning C4251: 'google::protobuf::internal::ImplicitWeakMessage::class_data_': 'google::protobuf::internal::ClassDataLite<1>'에서는 'google::protobuf::internal::ImplicitWeakMessage'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\message_lite.h(458,8):
+      'google::protobuf::internal::ClassDataLite<1>' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\extension_set.h(724,7): warning C4251: 'google::protobuf::internal::ExtensionSet::maybe_create_lazy_extension_': 'std::atomic<google::protobuf::internal::ExtensionSet::LazyMessageExtension *(__cdecl *)(google::protobuf::Arena *)>'에서는 'google::protobuf::internal::ExtensionSet'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\atomic(2131,8):
+      'std::atomic<google::protobuf::internal::ExtensionSet::LazyMessageExtension *(__cdecl *)(google::protobuf::Arena *)>' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\extension_set.h(1408,26): warning C4251: 'google::protobuf::internal::RepeatedPrimitiveDefaults::default_repeated_field_int32_t_': 'google::protobuf::RepeatedField<int32_t>'에서는 'google::protobuf::internal::RepeatedPrimitiveDefaults'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\repeated_field.h(256,34):
+      'google::protobuf::RepeatedField<int32_t>' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\extension_set.h(1409,26): warning C4251: 'google::protobuf::internal::RepeatedPrimitiveDefaults::default_repeated_field_int64_t_': 'google::protobuf::RepeatedField<int64_t>'에서는 'google::protobuf::internal::RepeatedPrimitiveDefaults'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\repeated_field.h(256,34):
+      'google::protobuf::RepeatedField<int64_t>' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\extension_set.h(1410,27): warning C4251: 'google::protobuf::internal::RepeatedPrimitiveDefaults::default_repeated_field_uint32_t_': 'google::protobuf::RepeatedField<uint32_t>'에서는 'google::protobuf::internal::RepeatedPrimitiveDefaults'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\repeated_field.h(256,34):
+      'google::protobuf::RepeatedField<uint32_t>' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\extension_set.h(1411,27): warning C4251: 'google::protobuf::internal::RepeatedPrimitiveDefaults::default_repeated_field_uint64_t_': 'google::protobuf::RepeatedField<uint64_t>'에서는 'google::protobuf::internal::RepeatedPrimitiveDefaults'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\repeated_field.h(256,34):
+      'google::protobuf::RepeatedField<uint64_t>' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\extension_set.h(1412,25): warning C4251: 'google::protobuf::internal::RepeatedPrimitiveDefaults::default_repeated_field_double_': 'google::protobuf::RepeatedField<double>'에서는 'google::protobuf::internal::RepeatedPrimitiveDefaults'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\repeated_field.h(256,34):
+      'google::protobuf::RepeatedField<double>' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\extension_set.h(1413,24): warning C4251: 'google::protobuf::internal::RepeatedPrimitiveDefaults::default_repeated_field_float_': 'google::protobuf::RepeatedField<float>'에서는 'google::protobuf::internal::RepeatedPrimitiveDefaults'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\repeated_field.h(256,34):
+      'google::protobuf::RepeatedField<float>' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\extension_set.h(1414,23): warning C4251: 'google::protobuf::internal::RepeatedPrimitiveDefaults::default_repeated_field_bool_': 'google::protobuf::RepeatedField<bool>'에서는 'google::protobuf::internal::RepeatedPrimitiveDefaults'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\repeated_field.h(256,34):
+      'google::protobuf::RepeatedField<bool>' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\descriptor.h(749,29): warning C4251: 'google::protobuf::Descriptor::all_names_': 'google::protobuf::internal::DescriptorNames'에서는 'google::protobuf::Descriptor'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\descriptor.h(233,7):
+      'google::protobuf::internal::DescriptorNames' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\descriptor.h(1203,29): warning C4251: 'google::protobuf::FieldDescriptor::all_names_': 'google::protobuf::internal::DescriptorNames'에서는 'google::protobuf::FieldDescriptor'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\descriptor.h(233,7):
+      'google::protobuf::internal::DescriptorNames' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\descriptor.h(1342,29): warning C4251: 'google::protobuf::OneofDescriptor::all_names_': 'google::protobuf::internal::DescriptorNames'에서는 'google::protobuf::OneofDescriptor'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\descriptor.h(233,7):
+      'google::protobuf::internal::DescriptorNames' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\descriptor.h(1548,29): warning C4251: 'google::protobuf::EnumDescriptor::all_names_': 'google::protobuf::internal::DescriptorNames'에서는 'google::protobuf::EnumDescriptor'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\descriptor.h(233,7):
+      'google::protobuf::internal::DescriptorNames' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\descriptor.h(1768,29): warning C4251: 'google::protobuf::ServiceDescriptor::all_names_': 'google::protobuf::internal::DescriptorNames'에서는 'google::protobuf::ServiceDescriptor'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\descriptor.h(233,7):
+      'google::protobuf::internal::DescriptorNames' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\descriptor.h(1876,29): warning C4251: 'google::protobuf::MethodDescriptor::all_names_': 'google::protobuf::internal::DescriptorNames'에서는 'google::protobuf::MethodDescriptor'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\descriptor.h(233,7):
+      'google::protobuf::internal::DescriptorNames' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\descriptor.h(2647,23): warning C4251: 'google::protobuf::DescriptorPool::field_memo_table_mutex_': 'absl::lts_20260107::Mutex'에서는 'google::protobuf::DescriptorPool'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\vcpkg\vcpkg\installed\x64-windows\include\absl\synchronization\mutex.h(150,48):
+      'absl::lts_20260107::Mutex' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\descriptor.h(2650,7): warning C4251: 'google::protobuf::DescriptorPool::field_memo_table_': 'std::unique_ptr<absl::lts_20260107::flat_hash_map<std::pair<const void *,const void *>,std::unique_ptr<google::protobuf::DescriptorPool::MemoBase,std::default_delete<google::protobuf::DescriptorPool::MemoBase>>,absl::lts_20260107::hash_internal::Hash<T>,std::equal_to<T>,std::allocator<std::pair<const K,V>>>,std::default_delete<absl::lts_20260107::flat_hash_map<K,V,absl::lts_20260107::hash_internal::Hash<T>,std::equal_to<T>,std::allocator<std::pair<const K,V>>>>>'에서는 'google::protobuf::DescriptorPool'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\descriptor.h(2650,7): warning C4251:         with
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\descriptor.h(2650,7): warning C4251:         [
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\descriptor.h(2650,7): warning C4251:             T=std::pair<const void *,const void *>,
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\descriptor.h(2650,7): warning C4251:             K=std::pair<const void *,const void *>,
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\descriptor.h(2650,7): warning C4251:             V=std::unique_ptr<google::protobuf::DescriptorPool::MemoBase,std::default_delete<google::protobuf::DescriptorPool::MemoBase>>
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\descriptor.h(2650,7): warning C4251:         ]
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3347,7):
+      'std::unique_ptr<absl::lts_20260107::flat_hash_map<std::pair<const void *,const void *>,std::unique_ptr<google::protobuf::DescriptorPool::MemoBase,std::default_delete<google::protobuf::DescriptorPool::MemoBase>>,absl::lts_20260107::hash_internal::Hash<T>,std::equal_to<T>,std::allocator<std::pair<const K,V>>>,std::default_delete<absl::lts_20260107::flat_hash_map<K,V,absl::lts_20260107::hash_internal::Hash<T>,std::equal_to<T>,std::allocator<std::pair<const K,V>>>>>' 선언을 참조하십시오.
+          with
+          [
+              T=std::pair<const void *,const void *>,
+              K=std::pair<const void *,const void *>,
+              V=std::unique_ptr<google::protobuf::DescriptorPool::MemoBase,std::default_delete<google::protobuf::DescriptorPool::MemoBase>>
+          ]
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\descriptor.h(2668,7): warning C4251: 'google::protobuf::DescriptorPool::dispatcher_': 'std::unique_ptr<absl::lts_20260107::AnyInvocable<void (absl::lts_20260107::FunctionRef<void (void)>) const>,std::default_delete<absl::lts_20260107::AnyInvocable<void (absl::lts_20260107::FunctionRef<void (void)>) const>>>'에서는 'google::protobuf::DescriptorPool'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3347,7):
+      'std::unique_ptr<absl::lts_20260107::AnyInvocable<void (absl::lts_20260107::FunctionRef<void (void)>) const>,std::default_delete<absl::lts_20260107::AnyInvocable<void (absl::lts_20260107::FunctionRef<void (void)>) const>>>' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\descriptor.h(2674,27): warning C4251: 'google::protobuf::DescriptorPool::tables_': 'std::unique_ptr<google::protobuf::DescriptorPool::Tables,std::default_delete<google::protobuf::DescriptorPool::Tables>>'에서는 'google::protobuf::DescriptorPool'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3347,7):
+      'std::unique_ptr<google::protobuf::DescriptorPool::Tables,std::default_delete<google::protobuf::DescriptorPool::Tables>>' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\descriptor.h(2690,42): warning C4251: 'google::protobuf::DescriptorPool::direct_input_files_': 'absl::lts_20260107::flat_hash_map<std::string,bool,absl::lts_20260107::container_internal::StringHash,absl::lts_20260107::container_internal::StringEq,std::allocator<std::pair<const K,V>>>'에서는 'google::protobuf::DescriptorPool'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\descriptor.h(2690,42): warning C4251:         with
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\descriptor.h(2690,42): warning C4251:         [
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\descriptor.h(2690,42): warning C4251:             K=std::string,
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\descriptor.h(2690,42): warning C4251:             V=bool
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\descriptor.h(2690,42): warning C4251:         ]
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\vcpkg\vcpkg\installed\x64-windows\include\absl\container\flat_hash_map.h(137,28):
+      'absl::lts_20260107::flat_hash_map<std::string,bool,absl::lts_20260107::container_internal::StringHash,absl::lts_20260107::container_internal::StringEq,std::allocator<std::pair<const K,V>>>' 선언을 참조하십시오.
+          with
+          [
+              K=std::string,
+              V=bool
+          ]
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\descriptor.h(2694,39): warning C4251: 'google::protobuf::DescriptorPool::feature_set_defaults_spec_': 'std::unique_ptr<google::protobuf::FeatureSetDefaults,std::default_delete<google::protobuf::FeatureSetDefaults>>'에서는 'google::protobuf::DescriptorPool'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3347,7):
+      'std::unique_ptr<google::protobuf::FeatureSetDefaults,std::default_delete<google::protobuf::FeatureSetDefaults>>' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\io\zero_copy_stream_impl_lite.h(232,30): warning C4251: 'google::protobuf::io::CopyingInputStreamAdaptor::buffer_': 'std::unique_ptr<uint8_t [],std::default_delete<uint8_t []>>'에서는 'google::protobuf::io::CopyingInputStreamAdaptor'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3486,7):
+      'std::unique_ptr<uint8_t [],std::default_delete<uint8_t []>>' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\io\zero_copy_stream_impl_lite.h(326,30): warning C4251: 'google::protobuf::io::CopyingOutputStreamAdaptor::buffer_': 'std::unique_ptr<uint8_t [],std::default_delete<uint8_t []>>'에서는 'google::protobuf::io::CopyingOutputStreamAdaptor'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3486,7):
+      'std::unique_ptr<uint8_t [],std::default_delete<uint8_t []>>' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\io\zero_copy_stream_impl_lite.h(400,28): warning C4251: 'google::protobuf::io::CordInputStream::it_': 'absl::lts_20260107::Cord::CharIterator'에서는 'google::protobuf::io::CordInputStream'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\vcpkg\vcpkg\installed\x64-windows\include\absl\strings\cord.h(626,9):
+      'absl::lts_20260107::Cord::CharIterator' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\io\zero_copy_stream_impl_lite.h(484,14): warning C4251: 'google::protobuf::io::CordOutputStream::cord_': 'absl::lts_20260107::Cord'에서는 'google::protobuf::io::CordOutputStream'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\vcpkg\vcpkg\installed\x64-windows\include\absl\strings\cord.h(172,7):
+      'absl::lts_20260107::Cord' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\io\zero_copy_stream_impl_lite.h(487,20): warning C4251: 'google::protobuf::io::CordOutputStream::buffer_': 'absl::lts_20260107::CordBuffer'에서는 'google::protobuf::io::CordOutputStream'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\vcpkg\vcpkg\installed\x64-windows\include\absl\strings\cord_buffer.h(105,7):
+      'absl::lts_20260107::CordBuffer' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\unknown_field_set.h(293,31): warning C4251: 'google::protobuf::UnknownFieldSet::fields_': 'google::protobuf::RepeatedField<google::protobuf::UnknownField>'에서는 'google::protobuf::UnknownFieldSet'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\repeated_field.h(256,34):
+      'google::protobuf::RepeatedField<google::protobuf::UnknownField>' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\map.h(678,22): warning C4267: 'return': 'size_t'에서 'google::protobuf::internal::map_index_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\map.h(681,49): warning C4267: 'return': 'size_t'에서 'google::protobuf::internal::map_index_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\map.h(685,16): warning C4244: '인수': 'uintptr_t'에서 'uint32_t'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\message.h(1111,27): warning C4251: 'google::protobuf::Reflection::tcparse_table_once_': 'absl::lts_20260107::once_flag'에서는 'google::protobuf::Reflection'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 함
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\vcpkg\vcpkg\installed\x64-windows\include\absl\base\call_once.h(89,7):
+      'absl::lts_20260107::once_flag' 선언을 참조하십시오.
+  
+C:\vcpkg\vcpkg\installed\x64-windows\include\absl\log\internal\check_op.h(506,1): warning C4018: '>=': signed 또는 unsigned가 일치하지 않습니다.
+  (소스 파일 'Protocol/Protocol.pb.cc'을(를) 컴파일하는 중)
+      C:\vcpkg\vcpkg\installed\x64-windows\include\absl\log\internal\check_op.h(506,1):
+      템플릿 인스턴스화 컨텍스트(가장 오래된 인스턴스화 컨텍스트)가
+          C:\vcpkg\vcpkg\installed\x64-windows\include\google\protobuf\micro_string.h(78,7):
+          컴파일되는 함수 템플릿 인스턴스화 'const char *absl::lts_20260107::log_internal::Check_GEImpl<unsigned int,T>(const T1 &,const T2 &,const char *)'에 대한 참조를 확인하세요.
+          with
+          [
+              T=google::protobuf::internal::MicroString::LargeRepKind,
+              T1=unsigned int,
+              T2=google::protobuf::internal::MicroString::LargeRepKind
+          ]
+  
+  RFT_NetworkUtility.cpp
+  RingBuffer.cpp
+  코드를 생성하고 있습니다...
+  RFT_NetWorkUtils.vcxproj -> C:\Users\ldb98\Documents\GitHub\Graduation-work\IOCPServer\RFT_IOCP_System\x64\Debug\RFT_NetWorkUtils.lib

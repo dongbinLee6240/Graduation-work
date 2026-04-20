@@ -1,6 +1,7 @@
 #pragma once
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #include "RFT_NetworkUtility.h" // 유틸리티 파일을 포함하여 중복 제거
+#include "RingBuffer.h"
 #include <winsock2.h>
 #include <windows.h>
 #include <string.h>
@@ -56,10 +57,12 @@ struct SOCKETINFO
 {
     WSAOVERLAPPED	overlapped;
     WSABUF			dataBuf;
-    SOCKET			socket;//맞아요 
+    SOCKET			socket;
     char			messageBuffer[BUFSIZE];
     int				recvBytes;
     int				sendBytes;
+    IO_TYPE         io_type;
+    RingBuffer      ringBuffer;
 };
 
 

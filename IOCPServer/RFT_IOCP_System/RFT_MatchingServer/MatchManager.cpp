@@ -117,11 +117,11 @@ void MatchManager::SendMatchCompletePackets()
             ZeroMemory(pSendInfo, sizeof(SOCKETINFO)); // 초기화
 
             pSendInfo->socket = player.socket; //이부분에서 플레이어정보를 활요
-            pSendInfo->ioType = IO_SEND; //이 소켓 작업은 send용으로 정의
+            pSendInfo->io_type = IO_SEND; //이 소켓 작업은 send용으로 정의
             
             // 데이터 버퍼 설정
-            pSendInfo->dataBuf.buf = sendBuffer;
-            pSendInfo->dataBuf.len = matchCompletePacket.length;
+            /*pSendInfo->dataBuf.buf = sendBuffer;
+            pSendInfo->dataBuf.len = matchCompletePacket.length;*/
 
             DWORD sendBytes;
             //비동기 송신
