@@ -1,0 +1,28 @@
+﻿  MatchManager.cpp
+C:\Users\ldb98\Documents\GitHub\Graduation-work\IOCPServer\RFT_IOCP_System\RFT_MatchingServer\MatchManager.cpp(30,32): warning C4267: '=': 'size_t'에서 'short'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ldb98\Documents\GitHub\Graduation-work\IOCPServer\RFT_IOCP_System\RFT_MatchingServer\MatchManager.cpp(120,24): error C2039: 'ioType': 'SOCKETINFO'의 멤버가 아닙니다.
+      C:\Users\ldb98\Documents\GitHub\Graduation-work\IOCPServer\RFT_IOCP_System\RFT_MatchingServer\RFT_IOCP_MatchingServer.h(55,8):
+      'SOCKETINFO' 선언을 참조하십시오.
+  
+C:\Users\ldb98\Documents\GitHub\Graduation-work\IOCPServer\RFT_IOCP_System\RFT_MatchingServer\MatchManager.cpp(123,38): error C2065: 'sendBuffer': 선언되지 않은 식별자입니다.
+C:\Users\ldb98\Documents\GitHub\Graduation-work\IOCPServer\RFT_IOCP_System\RFT_MatchingServer\MatchManager.cpp(124,38): error C2065: 'matchCompletePacket': 선언되지 않은 식별자입니다.
+  RFT_IOCP_MatchingServer.cpp
+C:\Users\ldb98\Documents\GitHub\Graduation-work\IOCPServer\RFT_IOCP_System\RFT_MatchingServer\RFT_IOCP_MatchingServer.cpp(38,18): warning C4267: '+=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ldb98\Documents\GitHub\Graduation-work\IOCPServer\RFT_IOCP_System\RFT_MatchingServer\RFT_IOCP_MatchingServer.cpp(57,18): warning C4267: '+=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\ldb98\Documents\GitHub\Graduation-work\IOCPServer\RFT_IOCP_System\RFT_MatchingServer\RFT_IOCP_MatchingServer.cpp(180,16): error C2039: 'ioType': 'SOCKETINFO'의 멤버가 아닙니다.
+      C:\Users\ldb98\Documents\GitHub\Graduation-work\IOCPServer\RFT_IOCP_System\RFT_MatchingServer\RFT_IOCP_MatchingServer.h(55,8):
+      'SOCKETINFO' 선언을 참조하십시오.
+  
+C:\Users\ldb98\Documents\GitHub\Graduation-work\IOCPServer\RFT_IOCP_System\RFT_MatchingServer\RFT_IOCP_MatchingServer.cpp(264,58): error C2039: 'ioType': 'SOCKETINFO'의 멤버가 아닙니다.
+      C:\Users\ldb98\Documents\GitHub\Graduation-work\IOCPServer\RFT_IOCP_System\RFT_MatchingServer\RFT_IOCP_MatchingServer.h(55,8):
+      'SOCKETINFO' 선언을 참조하십시오.
+  
+C:\Users\ldb98\Documents\GitHub\Graduation-work\IOCPServer\RFT_IOCP_System\RFT_MatchingServer\RFT_IOCP_MatchingServer.cpp(273,20): error C2039: 'ioType': 'SOCKETINFO'의 멤버가 아닙니다.
+      C:\Users\ldb98\Documents\GitHub\Graduation-work\IOCPServer\RFT_IOCP_System\RFT_MatchingServer\RFT_IOCP_MatchingServer.h(55,8):
+      'SOCKETINFO' 선언을 참조하십시오.
+  
+C:\Users\ldb98\Documents\GitHub\Graduation-work\IOCPServer\RFT_IOCP_System\RFT_MatchingServer\RFT_IOCP_MatchingServer.cpp(307,16): error C2039: 'ioType': 'SOCKETINFO'의 멤버가 아닙니다.
+      C:\Users\ldb98\Documents\GitHub\Graduation-work\IOCPServer\RFT_IOCP_System\RFT_MatchingServer\RFT_IOCP_MatchingServer.h(55,8):
+      'SOCKETINFO' 선언을 참조하십시오.
+  
+  코드를 생성하고 있습니다...
