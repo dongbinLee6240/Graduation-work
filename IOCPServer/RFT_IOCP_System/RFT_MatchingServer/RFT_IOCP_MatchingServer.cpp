@@ -309,7 +309,7 @@ void IOCompletionPort::WorkerThread()
 				if (req.ParseFromString(payload))
 				{
 					printf_s("[INFO] 매칭 요청 수신! Player ID: %d\n", req.player_id());
-					matchManager.addPlayerToQueue(req.player_id(), pSocketInfo->socket);
+					matchManager.addPlayerToQueue(req.player_id(), pSocketInfo->socket, this);
 				}
 				else 
 				{
