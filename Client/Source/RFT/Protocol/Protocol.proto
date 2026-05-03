@@ -1,0 +1,22 @@
+// Protocol.proto
+syntax = "proto3";
+
+package Protocol;
+
+// 패킷 헤더용 ID
+enum MessageId {
+    UNKNOWN = 0;
+    REQ_MATCH = 1;
+    RES_MATCH_SUCCESS = 2;
+}
+
+// [1] 매칭 요청 패킷 (클라이언트 -> 서버)
+message C2S_MatchRequest {
+    int32 player_id = 1;
+}
+
+// [2] 매칭 성공 응답 패킷 (서버 -> 클라이언트)
+message S2C_MatchSuccess {
+    string ds_ip = 1;
+    int32 ds_port = 2;
+}

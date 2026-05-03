@@ -13,7 +13,7 @@ enum class EHeaderType : uint8
 {
 	REQ_MATCH = 0 UMETA(DisplayName = "Request Match"),
 	MATCHING = 1 UMETA(DisplayName = "MATCHING"),
-	MATCH_COMPLETE = 2 UMETA(DisplayName = "MATCH_COMPLETE")
+	RES_MATCH_SUCCESS = 2 UMETA(DisplayName = "MATCH_COMPLETE")
 };
 
 /**
