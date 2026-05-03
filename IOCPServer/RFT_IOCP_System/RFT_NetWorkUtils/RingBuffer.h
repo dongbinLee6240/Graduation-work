@@ -22,7 +22,7 @@ public:
     size_t GetUsedSize() const;
 
     // 현재 버퍼에 남아있는 빈 공간의 크기
-    size_t GetFreeSpace() const;
+    size_t GetAvailableSpace() const;
 
     // 버퍼 초기화
     void Clear();

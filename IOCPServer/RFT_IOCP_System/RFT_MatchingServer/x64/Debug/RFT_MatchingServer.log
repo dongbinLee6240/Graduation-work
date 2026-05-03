@@ -1,13 +1,13 @@
-﻿  main.cpp
-  MatchManager.cpp
-C:\Users\ldb98\Documents\GitHub\Graduation-work\IOCPServer\RFT_IOCP_System\RFT_NetWorkUtils\Protocol\Protocol.pb.h(14,10): error C1083: 포함 파일을 열 수 없습니다. 'google/protobuf/runtime_version.h': No such file or directory
-  (소스 파일 'main.cpp'을(를) 컴파일하는 중)
-  
-C:\Users\ldb98\Documents\GitHub\Graduation-work\IOCPServer\RFT_IOCP_System\RFT_NetWorkUtils\Protocol\Protocol.pb.h(14,10): error C1083: 포함 파일을 열 수 없습니다. 'google/protobuf/runtime_version.h': No such file or directory
-  (소스 파일 'MatchManager.cpp'을(를) 컴파일하는 중)
-  
-  RFT_IOCP_MatchingServer.cpp
-C:\Users\ldb98\Documents\GitHub\Graduation-work\IOCPServer\RFT_IOCP_System\RFT_NetWorkUtils\Protocol\Protocol.pb.h(14,10): error C1083: 포함 파일을 열 수 없습니다. 'google/protobuf/runtime_version.h': No such file or directory
-  (소스 파일 'RFT_IOCP_MatchingServer.cpp'을(를) 컴파일하는 중)
-  
-  코드를 생성하고 있습니다...
+﻿MatchManager.obj : error LNK2019: "public: virtual __cdecl Protocol::S2C_MatchSuccess::~S2C_MatchSuccess(void)" (??1S2C_MatchSuccess@Protocol@@UEAA@XZ)"public: void __cdecl MatchManager::addPlayerToQueue(int,unsigned __int64,class IOCompletionPort *)" (?addPlayerToQueue@MatchManager@@QEAAXH_KPEAVIOCompletionPort@@@Z) 함수에서 참조되는 확인할 수 없는 외부 기호
+MatchManager.obj : error LNK2019: "private: __cdecl Protocol::S2C_MatchSuccess::S2C_MatchSuccess(class google::protobuf::Arena *)" (??0S2C_MatchSuccess@Protocol@@AEAA@PEAVArena@protobuf@google@@@Z)"public: __cdecl Protocol::S2C_MatchSuccess::S2C_MatchSuccess(void)" (??0S2C_MatchSuccess@Protocol@@QEAA@XZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+MatchManager.obj : error LNK2019: "const Protocol::S2C_MatchSuccess::`vftable'" (??_7S2C_MatchSuccess@Protocol@@6B@)"public: __cdecl Protocol::S2C_MatchSuccess::S2C_MatchSuccess(void)" (??0S2C_MatchSuccess@Protocol@@QEAA@XZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+RFT_IOCP_MatchingServer.obj : error LNK2019: "public: virtual __cdecl Protocol::C2S_MatchRequest::~C2S_MatchRequest(void)" (??1C2S_MatchRequest@Protocol@@UEAA@XZ)"public: void __cdecl IOCompletionPort::WorkerThread(void)" (?WorkerThread@IOCompletionPort@@QEAAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+RFT_IOCP_MatchingServer.obj : error LNK2019: "private: __cdecl Protocol::C2S_MatchRequest::C2S_MatchRequest(class google::protobuf::Arena *)" (??0C2S_MatchRequest@Protocol@@AEAA@PEAVArena@protobuf@google@@@Z)"public: __cdecl Protocol::C2S_MatchRequest::C2S_MatchRequest(void)" (??0C2S_MatchRequest@Protocol@@QEAA@XZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+RFT_IOCP_MatchingServer.obj : error LNK2019: "public: static class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl PacketHandler::MakeSendBuffer(enum Protocol::MessageId,class google::protobuf::Message const &)" (?MakeSendBuffer@PacketHandler@@SA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4MessageId@Protocol@@AEBVMessage@protobuf@google@@@Z)"public: void __cdecl IOCompletionPort::SendPacket(unsigned __int64,enum Protocol::MessageId,class google::protobuf::Message const &)" (?SendPacket@IOCompletionPort@@QEAAX_KW4MessageId@Protocol@@AEBVMessage@protobuf@google@@@Z) 함수에서 참조되는 확인할 수 없는 외부 기호
+RFT_IOCP_MatchingServer.obj : error LNK2019: "public: __cdecl RingBuffer::RingBuffer(unsigned __int64)" (??0RingBuffer@@QEAA@_K@Z)"public: __cdecl SOCKETINFO::SOCKETINFO(void)" (??0SOCKETINFO@@QEAA@XZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+RFT_IOCP_MatchingServer.obj : error LNK2019: "public: bool __cdecl RingBuffer::Enqueue(char const *,unsigned __int64)" (?Enqueue@RingBuffer@@QEAA_NPEBD_K@Z)"public: void __cdecl IOCompletionPort::WorkerThread(void)" (?WorkerThread@IOCompletionPort@@QEAAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+RFT_IOCP_MatchingServer.obj : error LNK2019: "public: bool __cdecl RingBuffer::Dequeue(char *,unsigned __int64)" (?Dequeue@RingBuffer@@QEAA_NPEAD_K@Z)"public: void __cdecl IOCompletionPort::WorkerThread(void)" (?WorkerThread@IOCompletionPort@@QEAAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+RFT_IOCP_MatchingServer.obj : error LNK2019: "public: bool __cdecl RingBuffer::Peek(char *,unsigned __int64)const " (?Peek@RingBuffer@@QEBA_NPEAD_K@Z)"public: void __cdecl IOCompletionPort::WorkerThread(void)" (?WorkerThread@IOCompletionPort@@QEAAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+RFT_IOCP_MatchingServer.obj : error LNK2019: "public: unsigned __int64 __cdecl RingBuffer::GetUsedSize(void)const " (?GetUsedSize@RingBuffer@@QEBA_KXZ)"public: void __cdecl IOCompletionPort::WorkerThread(void)" (?WorkerThread@IOCompletionPort@@QEAAXXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+RFT_IOCP_MatchingServer.obj : error LNK2019: "const Protocol::C2S_MatchRequest::`vftable'" (??_7C2S_MatchRequest@Protocol@@6B@)"public: __cdecl Protocol::C2S_MatchRequest::C2S_MatchRequest(void)" (??0C2S_MatchRequest@Protocol@@QEAA@XZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+C:\Users\ldb98\Documents\GitHub\Graduation-work\IOCPServer\RFT_IOCP_System\x64\Debug\RFT_MatchingServer.exe : fatal error LNK1120: 12개의 확인할 수 없는 외부 참조입니다.

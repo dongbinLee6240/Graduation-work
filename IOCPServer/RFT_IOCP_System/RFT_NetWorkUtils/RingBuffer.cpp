@@ -11,7 +11,7 @@ RingBuffer::RingBuffer(size_t capacity)
 bool RingBuffer::Enqueue(const char* data, size_t size)
 {
     // 남은 공간보다 넣으려는 데이터가 크면 실패 (버퍼 오버플로우 방지)
-    if (GetFreeSpace() < size) return false;
+    if (GetAvailableSpace() < size) return false;
 
     // 쓰기 포인터(rear)부터 버퍼 끝까지의 남은 직선 공간
     size_t rightSpace = capacity_ - rear_;
@@ -80,7 +80,7 @@ size_t RingBuffer::GetUsedSize() const
 }
 
 // 현재 버퍼에 남아있는 빈 공간의 크기
-size_t RingBuffer::GetFreeSpace() const
+size_t RingBuffer::GetAvailableSpace() const
 {
     return capacity_ - usedSize_;
 }

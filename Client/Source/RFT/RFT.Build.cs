@@ -31,11 +31,15 @@ public class RFT : ModuleRules
         RuntimeDependencies.Add(Path.Combine(VcpkgBinPath, "libprotobuf.dll")); //있음
 
         // ── Abseil: import lib 연결 + DLL 복사 ───────────────
-        foreach (string LIB in Directory.GetFiles(VcpkgLibPath, "absl_*.lib")) //23개 있음
+        foreach (string AbslLib in Directory.GetFiles(VcpkgLibPath, "absl_*.lib")) //23개 있음
         {
-            PublicAdditionalLibraries.Add(LIB);
+            PublicAdditionalLibraries.Add(AbslLib);
         }
-        foreach (string DLL in Directory.GetFiles(VcpkgBinPath, "abseil_*.dll")) //absl_*.dll은 존재x
+        foreach(string AbseilLib in Directory.GetFiles(VcpkgLibPath, "abseil_*.lib"))
+        {
+            PublicAdditionalLibraries.Add(AbseilLib);
+        }
+        foreach (string DLL in Directory.GetFiles(VcpkgBinPath, "abseil_*.dll")) //absl_*.dll은 존재x 대신 abseil_*.dll존재
         {
             RuntimeDependencies.Add(DLL);
         }
@@ -51,6 +55,7 @@ public class RFT : ModuleRules
         PublicDefinitions.Add("NOMINMAX");
         PublicDefinitions.Add("WIN32_LEAN_AND_MEAN");
         PublicDefinitions.Add("PROTOBUF_USE_DLLS");
-        
+        PublicDefinitions.Add("ABSL_CONSUME_DLL");
+
     }
 }
