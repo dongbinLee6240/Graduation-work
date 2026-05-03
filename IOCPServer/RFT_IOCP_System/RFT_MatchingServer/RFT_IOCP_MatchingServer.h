@@ -1,6 +1,7 @@
 #pragma once
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #include "RFT_NetworkUtility.h" // 유틸리티 파일을 포함하여 중복 제거
+#include "RFT_PacketDefinitions.h"
 #include "RingBuffer.h"
 #include <winsock2.h>
 #include <windows.h>
@@ -22,47 +23,39 @@ enum HeaderType : INT8
     MATCH_COMPLETE = 2
 };
 
-enum IO_TYPE
+enum class IO_TYPE 
+{ IO_RECV, 
+  IO_SEND 
+};
+
+struct IO_CONTEXT
 {
-    IO_RECV,
-    IO_SEND
+    WSAOVERLAPPED   overlapped;
+    char            buffer[BUFSIZE];
+    IO_TYPE         io_type;
+    WSABUF          wsaBuf; // 이 작업에 사용될 버퍼 정보
 };
 
 void PrintBufferHex(const char* buffer, size_t length);
-class Packet
-{
-public:
-    short length;
-    INT8 headercode;
-    const char* data;
-    unsigned short end;
-
-    Packet() : length(0), headercode(0), data(nullptr), end(0xFFFF) {}
-    ~Packet() {}
-
-    void EnterMatch(Packet* packet, char* buffer);
-
-    void MatchCompletePacket(Packet* packet,char*buffer);
-};
-
-class PacketMaker
-{
-public:
-    void serialize(Packet* packet, char* buffer);
-
-    Packet deserialize(const char* buffer);
-};
 
 struct SOCKETINFO
 {
-    WSAOVERLAPPED	overlapped;
-    WSABUF			dataBuf;
-    SOCKET			socket;
-    char			messageBuffer[BUFSIZE];
-    int				recvBytes;
-    int				sendBytes;
-    IO_TYPE         io_type;
+    SOCKET          socket;
     RingBuffer      ringBuffer;
+
+    // 핵심: 수신용 행동 상자와 송신용 행동 상자를 '따로' 둡니다!
+    IO_CONTEXT      recvContext;
+    IO_CONTEXT      sendContext;
+
+    // 생성자에서 초기화
+    SOCKETINFO() 
+    {
+        ZeroMemory(&recvContext.overlapped, sizeof(WSAOVERLAPPED));
+        recvContext.io_type = IO_TYPE::IO_RECV;
+
+        ZeroMemory(&sendContext.overlapped, sizeof(WSAOVERLAPPED));
+        sendContext.io_type = IO_TYPE::IO_SEND;
+    }
 };
 
 
@@ -72,22 +65,23 @@ public:
     IOCompletionPort();
     ~IOCompletionPort();
 
-    // 소켓 등록 및 서버 정보 설정
     bool Initialize();
-    // 서버 시작
     void StartServer();
-    // 작업 스레드 생성
     bool CreateWorkerThread();
-    // 작업 스레드
     void WorkerThread();
+    void SendPacket(SOCKET targetSocket, 
+        Protocol::MessageId msgId, 
+        const google::protobuf::Message& message);
+
 
 private:
-    SOCKETINFO* pSocketInfo;		// 소켓 정보
-    SOCKET			listenSocket;		// 서버 리슨 소켓
-    HANDLE			hIOCP;			// IOCP 객체 핸들
-    bool			bAccept;			// 요청 동작 플래그
-    bool			bWorkerThread;	// 작업 스레드 동작 플래그
-    HANDLE* pWorkerHandle;	// 작업 스레드 핸들
+    void err_display(const char* msg); // 에러 출력용 헬퍼 함수
+
+    HANDLE hIOCP;
+    SOCKET listenSocket;
+    HANDLE* pWorkerHandle;
+    bool bWorkerThread;
+    bool bAccept;
 };
 
 struct Player 

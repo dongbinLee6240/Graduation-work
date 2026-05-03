@@ -1,28 +1,36 @@
 #pragma once
 #include <queue>
-#include <vector>
-#include <mutex> //스레드 동기화를 위한 mutex 헤더
+#include <mutex>
 #include <WinSock2.h>
-#include "RFT_IOCP_MatchingServer.h"
+#include <cstdint>
 
-#define MAX_TEAM_SIZE 2  // 디버깅 용 팀 사이즈
-#define MAX_TEAMS 1      // 디버깅 용 최대 팀 수
+// [신규 추가] 상호 참조(Circular Include)를 막기 위한 전방 선언
+class IOCompletionPort;
 
-class MatchManager
+struct MatchPlayer 
 {
-private:
+    int32_t playerId;
+    SOCKET  socket;
+};
 
-    MatchManager();  // private 생성자
-    ~MatchManager(); // private 소멸자
-
-    std::queue<Player> playerQueue; // 대기열
-    std::vector<Team> teams;        // 팀 목록
-    std::mutex m_mutex;
-
+class MatchManager 
+{
 public:
-    static MatchManager& GetInstance();
+    static MatchManager& GetInstance() 
+    {
+        static MatchManager instance;
+        return instance;
+    }
 
-    void MatchPlayers();                  // 매칭 로직
-    void SendMatchCompletePackets();      // 매칭 완료 패킷 전송
-    void addPlayerToQueue(const Packet& packet, SOCKET ClientSocket); // 플레이어 추가
+    // [수정됨] 매개변수로 서버 객체의 포인터를 받습니다!
+    void addPlayerToQueue(int32_t playerId, SOCKET clientSocket, IOCompletionPort* pServer);
+
+private:
+    MatchManager() = default;
+    ~MatchManager() = default;
+    MatchManager(const MatchManager&) = delete;
+    MatchManager& operator=(const MatchManager&) = delete;
+
+    std::queue<MatchPlayer> waitingQueue;
+    std::mutex queueMutex;
 };
