@@ -64,7 +64,7 @@ private:
     // 내부 C++ 로직 전용 함수들 (UHT 에러 방지를 위해 UFUNCTION 제거)
     bool ConnectToServer();
     void CreateMatchRequestPacket(TArray<uint8>& Packet);
-    void HandleServerResponse(const FString& Data, uint8 Header);
+    void HandleServerResponse(const TArray<uint8>& Data, uint8 Header);
     void StartNetworkThread();
     void StopNetworkThread();
 };

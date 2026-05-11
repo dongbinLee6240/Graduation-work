@@ -26,9 +26,9 @@ class FMatchNetworkRunnable : public FRunnable
 public:
     FSocket* MatchSocket;
     FThreadSafeBool bIsRunning;
-    TFunction<void(const FString&, uint8)> OnResponseReceived;
+    TFunction<void(const TArray<uint8>, uint8)> OnResponseReceived;
 
-    FMatchNetworkRunnable(FSocket* InSocket, TFunction<void(const FString&, uint8)> ResponseCallback)
+    FMatchNetworkRunnable(FSocket* InSocket, TFunction<void(const TArray<uint8>, uint8)> ResponseCallback)
         : MatchSocket(InSocket), bIsRunning(true), OnResponseReceived(ResponseCallback)
     {
     }
@@ -56,10 +56,9 @@ public:
 
                         if (MatchSocket->Recv(PayloadBuffer.GetData(), PayloadSize, PayloadBytesRead) && PayloadBytesRead == PayloadSize)
                         {
-                            FString Data(PayloadSize, UTF8_TO_TCHAR(reinterpret_cast<const char*>(PayloadBuffer.GetData())));
 
                             if (OnResponseReceived) {
-                                OnResponseReceived(Data, Header.MessageId);
+                                OnResponseReceived(PayloadBuffer, Header.MessageId);
                             }
                         }
                     }
@@ -118,14 +117,14 @@ void UMainLobbyUserWidget::OnMatchButtonClicked()
         TArray<uint8> Packet;
         CreateMatchRequestPacket(Packet);
 
-        // [수정] 스레드를 먼저 깔끔하게 하나만 생성하고 시작합니다. (이중 new 제거)
-        StartNetworkThread();
-
-        // [수정] 스레드가 생성된 상태에서 안전하게 패킷을 보냅니다.
-        if (MatchNetworkRunnable && MatchNetworkRunnable->SendMatchRequest(Packet))
+        // 1. 패킷을 '메인 스레드'에서 직접 안전하게 먼저 보냅니다.
+        int32 BytesSent;
+        if (MatchSocket && MatchSocket->Send(Packet.GetData(), Packet.Num(), BytesSent))
         {
-            // 바이너리 데이터가 깨져서(외계어) 보이지 않도록 크기만 출력합니다.
             UE_LOG(LogTemp, Log, TEXT("Match request sent successfully. Packet Size: %d"), Packet.Num());
+
+            // 2. 패킷 전송이 성공한 후에만 '수신용 대기 스레드'를 켭니다.
+            StartNetworkThread();
         }
         else
         {
@@ -141,7 +140,7 @@ void UMainLobbyUserWidget::OnMatchButtonClicked()
 bool UMainLobbyUserWidget::ConnectToServer()
 {
     ISocketSubsystem* SocketSubsystem = ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM);
-    MatchSocket = SocketSubsystem->CreateSocket(NAME_Stream, TEXT("MatchmakingSocket"), false);
+    MatchSocket = SocketSubsystem->CreateSocket(NAME_Stream, TEXT("MatchmakingSocket"), true);
 
     // [수정] 논블로킹 해제! 안정적인 Connect와 Send를 위해 기본(블로킹) 모드를 사용합니다.
     // MatchSocket->SetNonBlocking(true); 
@@ -189,16 +188,15 @@ void UMainLobbyUserWidget::CreateMatchRequestPacket(TArray<uint8>& Packet)
     UE_LOG(LogTemp, Warning, TEXT("[Network] REQ_MATCH 패킷 전송 준비 완료! 크기: %d"), Header.PacketSize);
 }
 
-void UMainLobbyUserWidget::HandleServerResponse(const FString& Data, uint8 HeaderId)
+void UMainLobbyUserWidget::HandleServerResponse(const TArray<uint8>& Data, uint8 HeaderId)
 {
     switch (HeaderId)
     {
     case Protocol::RES_MATCH_SUCCESS:
     {
         Protocol::S2C_MatchSuccess res;
-        std::string payload(TCHAR_TO_UTF8(*Data), Data.Len());
 
-        if (res.ParseFromString(payload))
+        if (res.ParseFromArray(Data.GetData(), Data.Num()))
         {
             FString ServerIP = FString(UTF8_TO_TCHAR(res.ds_ip().c_str()));
             int32 ServerPort = res.ds_port();
@@ -234,11 +232,11 @@ void UMainLobbyUserWidget::StartNetworkThread()
     StopNetworkThread();
 
     MatchNetworkRunnable = new FMatchNetworkRunnable(MatchSocket,
-        [this](const FString& Data, uint8 Header)
+        [this](const TArray<uint8>&Data, uint8 Header)
         {
             AsyncTask(ENamedThreads::GameThread, [this, Data, Header]()
                 {
-                    if (Data.IsEmpty()) return;
+                    if (Data.Num() == 0) return;
                     HandleServerResponse(Data, Header);
                 });
         });

@@ -159,6 +159,14 @@ void IOCompletionPort::StartServer()
 		SOCKETINFO* pSocketInfo = new SOCKETINFO();
 		pSocketInfo->socket = clientSocket;
 
+		//초기화(초기화하지 않은 메모리 주소는 에러: 10014를 반환한다)
+		ZeroMemory(&(pSocketInfo->recvContext.overlapped), sizeof(WSAOVERLAPPED));
+		pSocketInfo->recvContext.io_type = IO_TYPE::IO_RECV;
+
+		//버퍼를 받을 wsaBuf세팅
+		pSocketInfo->recvContext.wsaBuf.buf = pSocketInfo->recvContext.buffer;
+		pSocketInfo->recvContext.wsaBuf.len = BUFSIZE;
+
         // IOCP에 정확히 등록 Completion Key로 pSocketInfo를 넘김
         if (CreateIoCompletionPort((HANDLE)clientSocket, hIOCP, (ULONG_PTR)pSocketInfo, 0) == NULL)
         {
@@ -186,7 +194,8 @@ void IOCompletionPort::StartServer()
 
 		if (nResult == SOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING) 
 		{
-			printf_s("[ERROR] WSARecv Failed - Socket: %lld\n", (long long)clientSocket);
+			int errorCode = WSAGetLastError();
+			printf_s("[ERROR] WSARecv Failed - Socket: %lld, ErrorCode: %d\n", (long long)clientSocket, errorCode);
 			closesocket(clientSocket);
 			delete pSocketInfo;
 			continue;
@@ -323,8 +332,12 @@ void IOCompletionPort::WorkerThread()
 			}
 		}
 
-		// 다음 RECV 작업 등록
+		// 다음 RECV 작업 등록(초기화)
 		ZeroMemory(&(pSocketInfo->recvContext.overlapped), sizeof(WSAOVERLAPPED));
+		pSocketInfo->recvContext.io_type = IO_TYPE::IO_RECV; // 혹시 몰라 타입 재명시
+		pSocketInfo->recvContext.wsaBuf.buf = pSocketInfo->recvContext.buffer;
+		pSocketInfo->recvContext.wsaBuf.len = BUFSIZE;
+
 		DWORD flags = 0;
 
 		int nResult = WSARecv(
