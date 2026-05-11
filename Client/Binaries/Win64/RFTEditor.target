@@ -29164,16 +29164,16 @@
 			"Type": "UFS"
 		},
 		{
+			"Path": "$(ProjectDir)/Binaries/Win64/abseil_dll.dll",
+			"Type": "NonUFS"
+		},
+		{
+			"Path": "$(ProjectDir)/Binaries/Win64/libprotobuf.dll",
+			"Type": "NonUFS"
+		},
+		{
 			"Path": "$(ProjectDir)/RFT.uproject",
 			"Type": "UFS"
-		},
-		{
-			"Path": "C:\\vcpkg\\installed\\x64-windows\\bin\\abseil_dll.dll",
-			"Type": "NonUFS"
-		},
-		{
-			"Path": "C:\\vcpkg\\installed\\x64-windows\\bin\\libprotobuf.dll",
-			"Type": "NonUFS"
 		}
 	],
 	"AdditionalProperties": [

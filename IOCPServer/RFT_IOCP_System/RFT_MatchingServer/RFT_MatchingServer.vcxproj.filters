@@ -24,6 +24,15 @@
     <ClCompile Include="RFT_IOCP_MatchingServer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="..\RFT_NetWorkUtils\Protocol\Protocol.pb.cc">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\RFT_NetWorkUtils\RFT_PacketDefinitions.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\RFT_NetWorkUtils\RingBuffer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MatchManager.h">

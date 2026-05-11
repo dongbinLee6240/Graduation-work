@@ -17,10 +17,11 @@ class RFT_API AEntryGameModeBase : public AGameModeBase
 protected:
 	virtual void BeginPlay() override; 
 
-	UPROPERTY(EditAnywhere,BlueprintReadOnly,Category="UMG Game")
-	UUserWidget* CurrentWidget;
+public:
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	TSubclassOf<class UUserWidget> HUDWidget;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UMG Game")
-	TSubclassOf<UUserWidget> HUDWidget;
+	UPROPERTY()
+	class UUserWidget* CurrentWidget;
 	
 };

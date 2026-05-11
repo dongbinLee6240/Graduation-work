@@ -20,7 +20,7 @@ struct FPacketHeader
 };
 #pragma pack(pop)
 
-// Runnable 클래스 정의
+// ── Runnable 클래스 (기존과 동일하지만 구조를 깔끔하게 유지) ──
 class FMatchNetworkRunnable : public FRunnable
 {
 public:
@@ -30,7 +30,8 @@ public:
 
     FMatchNetworkRunnable(FSocket* InSocket, TFunction<void(const FString&, uint8)> ResponseCallback)
         : MatchSocket(InSocket), bIsRunning(true), OnResponseReceived(ResponseCallback)
-    {}
+    {
+    }
 
     virtual uint32 Run() override
     {
@@ -40,28 +41,21 @@ public:
         {
             if (MatchSocket && MatchSocket->GetConnectionState() == SCS_Connected)
             {
-                // 1. 소켓에 읽을 데이터가 올 때까지 스레드를 대기시킵니다. (CPU 낭비 방지!)
                 uint32 PendingDataSize = 0;
                 if (MatchSocket->HasPendingData(PendingDataSize))
                 {
-                    // 2. 먼저 '헤더(4바이트)'만큼만 데이터를 읽어옵니다.
                     FPacketHeader Header;
                     int32 BytesRead = 0;
 
-                    // Peek(훔쳐보기) 기능이 없으므로 일단 4바이트를 강제로 읽어옵니다.
                     if (MatchSocket->Recv((uint8*)&Header, sizeof(FPacketHeader), BytesRead) && BytesRead == sizeof(FPacketHeader))
                     {
                         int32 PayloadSize = Header.PacketSize - sizeof(FPacketHeader);
-
-                        // 3. 헤더에 적힌 내용물 크기(PayloadSize)만큼 나머지 데이터를 읽어옵니다.
                         TArray<uint8> PayloadBuffer;
                         PayloadBuffer.SetNumUninitialized(PayloadSize);
                         int32 PayloadBytesRead = 0;
 
                         if (MatchSocket->Recv(PayloadBuffer.GetData(), PayloadSize, PayloadBytesRead) && PayloadBytesRead == PayloadSize)
                         {
-                            // 4. 순수 Protobuf 데이터를 FString으로 변환하여 메인 스레드로 넘김
-                            // (Protobuf는 중간에 널문자가 있을 수 있으므로 길이를 명시해서 FString 생성)
                             FString Data(PayloadSize, UTF8_TO_TCHAR(reinterpret_cast<const char*>(PayloadBuffer.GetData())));
 
                             if (OnResponseReceived) {
@@ -71,21 +65,17 @@ public:
                     }
                 }
                 else {
-                    // 데이터가 없으면 아주 잠깐(10ms) 쉬면서 무한루프 속도 조절
                     FPlatformProcess::Sleep(0.01f);
                 }
             }
             else {
-                break; // 연결 끊김
+                break;
             }
         }
         return 0;
     }
 
-    void Stop()
-    {
-        bIsRunning = false;
-    }
+    void Stop() { bIsRunning = false; }
 
     bool SendMatchRequest(const TArray<uint8>& Packet)
     {
@@ -98,18 +88,16 @@ public:
     }
 };
 
-
-// MainLobbyUserWidget 멤버 변수 초기화
-FMatchNetworkRunnable* MatchNetworkRunnable = nullptr;
-FRunnableThread* MatchNetworkThread = nullptr;
+// ── 메인 로비 UI 로직 ──
 
 void UMainLobbyUserWidget::NativeConstruct()
 {
+    Super::NativeConstruct();
+
     if (matching)
     {
         matching->OnClicked.AddDynamic(this, &UMainLobbyUserWidget::OnMatchButtonClicked);
     }
-
     if (Join)
     {
         Join->OnClicked.AddDynamic(this, &UMainLobbyUserWidget::OnJoinButtonClicked);
@@ -119,11 +107,7 @@ void UMainLobbyUserWidget::NativeConstruct()
 void UMainLobbyUserWidget::OnJoinButtonClicked()
 {
     FString ServerAddress = TEXT("127.0.0.1");
-
-    // OpenLevel 함수는 해당 주소로 연결을 시도합니다. 일반적으로 7777은 기본 포트입니다.
     FString Command = FString::Printf(TEXT("%s:%d"), *ServerAddress, 7777);
-
-    // 127.0.0.1 서버에 연결 (예: 멀티플레이어 서버)
     UGameplayStatics::OpenLevel(this, FName(*Command), true);
 }
 
@@ -134,24 +118,14 @@ void UMainLobbyUserWidget::OnMatchButtonClicked()
         TArray<uint8> Packet;
         CreateMatchRequestPacket(Packet);
 
-        // MatchNetworkRunnable 초기화 확인
-        if (!MatchNetworkRunnable)
-        {
-            MatchNetworkRunnable = new FMatchNetworkRunnable(MatchSocket,
-                [this](const FString& Data, uint8 Header)
-                {
-                    AsyncTask(ENamedThreads::GameThread, [this, Data, Header]()
-                        {
-                            HandleServerResponse(Data, Header);
-                        });
-                });
-        }
+        // [수정] 스레드를 먼저 깔끔하게 하나만 생성하고 시작합니다. (이중 new 제거)
+        StartNetworkThread();
 
-        // 패킷 전송 확인
+        // [수정] 스레드가 생성된 상태에서 안전하게 패킷을 보냅니다.
         if (MatchNetworkRunnable && MatchNetworkRunnable->SendMatchRequest(Packet))
         {
-            UE_LOG(LogTemp, Log, TEXT("Match request sent successfully."));
-            StartNetworkThread(); // 네트워크 스레드 시작
+            // 바이너리 데이터가 깨져서(외계어) 보이지 않도록 크기만 출력합니다.
+            UE_LOG(LogTemp, Log, TEXT("Match request sent successfully. Packet Size: %d"), Packet.Num());
         }
         else
         {
@@ -168,8 +142,10 @@ bool UMainLobbyUserWidget::ConnectToServer()
 {
     ISocketSubsystem* SocketSubsystem = ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM);
     MatchSocket = SocketSubsystem->CreateSocket(NAME_Stream, TEXT("MatchmakingSocket"), false);
-    // 비블로킹 소켓 설정
-    MatchSocket->SetNonBlocking(true);
+
+    // [수정] 논블로킹 해제! 안정적인 Connect와 Send를 위해 기본(블로킹) 모드를 사용합니다.
+    // MatchSocket->SetNonBlocking(true); 
+
     FIPv4Address IP;
     FIPv4Address::Parse(TEXT("127.0.0.1"), IP);
 
@@ -191,27 +167,24 @@ bool UMainLobbyUserWidget::ConnectToServer()
 
 void UMainLobbyUserWidget::CreateMatchRequestPacket(TArray<uint8>& Packet)
 {
-    // 1. Protobuf 요청 객체 생성 및 세팅
     Protocol::C2S_MatchRequest req;
 
-    // (주의: 서버에서 player_id를 int32로 받기로 했으므로, FString인 CID를 int로 변환해야 합니다.)
     URFTGameInstance* GameInstance = Cast<URFTGameInstance>(UGameplayStatics::GetGameInstance(this));
     if (GameInstance) {
         req.set_player_id(FCString::Atoi(*GameInstance->GetCID()));
     }
 
-    // Protobuf를 바이트 문자열로 직렬화
     std::string payload = req.SerializeAsString();
 
-    // 2. 4바이트 송장(헤더) 작성
     FPacketHeader Header;
     Header.PacketSize = sizeof(FPacketHeader) + payload.size();
-    Header.MessageId = Protocol::REQ_MATCH; // Enum 값 (1)
+    Header.MessageId = Protocol::REQ_MATCH;
 
-    // 3. TArray에 [헤더 + 데이터] 순서대로 밀어 넣기
     Packet.SetNum(Header.PacketSize);
     FMemory::Memcpy(Packet.GetData(), &Header, sizeof(FPacketHeader));
-    FMemory::Memcpy(Packet.GetData() + sizeof(FPacketHeader), payload.c_str(), payload.size());
+
+    // [수정] payload.c_str() 대신 바이너리에 안전한 payload.data() 사용
+    FMemory::Memcpy(Packet.GetData() + sizeof(FPacketHeader), payload.data(), payload.size());
 
     UE_LOG(LogTemp, Warning, TEXT("[Network] REQ_MATCH 패킷 전송 준비 완료! 크기: %d"), Header.PacketSize);
 }
@@ -222,7 +195,6 @@ void UMainLobbyUserWidget::HandleServerResponse(const FString& Data, uint8 Heade
     {
     case Protocol::RES_MATCH_SUCCESS:
     {
-        // 1. FString으로 넘어온 바이트 배열을 다시 Protobuf 객체로 변환 (역직렬화)
         Protocol::S2C_MatchSuccess res;
         std::string payload(TCHAR_TO_UTF8(*Data), Data.Len());
 
@@ -231,12 +203,16 @@ void UMainLobbyUserWidget::HandleServerResponse(const FString& Data, uint8 Heade
             FString ServerIP = FString(UTF8_TO_TCHAR(res.ds_ip().c_str()));
             int32 ServerPort = res.ds_port();
 
-            UE_LOG(LogTemp, Warning, TEXT("[Network]  매칭 완료! 서버로 이동합니다: %s:%d"), *ServerIP, ServerPort);
+            UE_LOG(LogTemp, Warning, TEXT("[Network] 매칭 완료! 서버로 이동합니다: %s:%d"), *ServerIP, ServerPort);
 
-            Mcomp = true;
-            StopNetworkThread(); // 매칭이 끝났으니 수신 스레드 종료
+            // [추가] 맵 이동 전에 소켓 연결을 끊고 스레드를 완전히 종료합니다.
+            StopNetworkThread();
+            if (MatchSocket)
+            {
+                MatchSocket->Close();
+                MatchSocket = nullptr;
+            }
 
-            // 2. 매칭 서버가 알려준 진짜 데디케이티드 서버 주소로 맵 이동!
             FString Command = FString::Printf(TEXT("%s:%d"), *ServerIP, ServerPort);
             UGameplayStatics::OpenLevel(this, FName(*Command), true);
         }
@@ -254,17 +230,15 @@ void UMainLobbyUserWidget::HandleServerResponse(const FString& Data, uint8 Heade
 
 void UMainLobbyUserWidget::StartNetworkThread()
 {
+    // [추가] 혹시라도 기존 스레드가 돌고 있다면 안전하게 끄고 새로 만듭니다.
+    StopNetworkThread();
+
     MatchNetworkRunnable = new FMatchNetworkRunnable(MatchSocket,
         [this](const FString& Data, uint8 Header)
         {
             AsyncTask(ENamedThreads::GameThread, [this, Data, Header]()
                 {
-                    if (Data.IsEmpty())
-                    {
-                        UE_LOG(LogTemp, Error, TEXT("Received empty data. Skipping HandleServerResponse."));
-                        return;
-                    }
-
+                    if (Data.IsEmpty()) return;
                     HandleServerResponse(Data, Header);
                 });
         });
@@ -277,14 +251,34 @@ void UMainLobbyUserWidget::StopNetworkThread()
     if (MatchNetworkRunnable)
     {
         MatchNetworkRunnable->Stop();
-        delete MatchNetworkRunnable;
-        MatchNetworkRunnable = nullptr;
     }
 
     if (MatchNetworkThread)
     {
-        MatchNetworkThread->Kill(true);
+        MatchNetworkThread->WaitForCompletion(); // 스레드가 안전하게 끝날 때까지 기다립니다.
         delete MatchNetworkThread;
         MatchNetworkThread = nullptr;
     }
+
+    if (MatchNetworkRunnable)
+    {
+        delete MatchNetworkRunnable;
+        MatchNetworkRunnable = nullptr;
+    }
+}
+// MainLobbyUserWidget.cpp 하단 어딘가에 추가
+
+void UMainLobbyUserWidget::NativeDestruct()
+{
+    // 위젯이 파괴될 때 (창을 닫거나 맵을 이동할 때) 실행됩니다.
+    // 백그라운드에 돌아가고 있는 스레드와 소켓을 깔끔하게 죽입니다.
+    StopNetworkThread();
+
+    if (MatchSocket)
+    {
+        MatchSocket->Close();
+        MatchSocket = nullptr;
+    }
+
+    Super::NativeDestruct(); // 부모 클래스의 Destruct 호출 (필수)
 }

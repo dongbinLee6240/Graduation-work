@@ -126,6 +126,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\RFT_NetWorkUtils\Protocol\Protocol.pb.cc" />
+    <ClCompile Include="..\RFT_NetWorkUtils\RFT_PacketDefinitions.cpp" />
+    <ClCompile Include="..\RFT_NetWorkUtils\RingBuffer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MatchManager.cpp" />
     <ClCompile Include="RFT_IOCP_MatchingServer.cpp" />
