@@ -11,7 +11,9 @@ public class RFT : ModuleRules
 
         PublicDependencyModuleNames.AddRange(new string[] {
             "Core", "CoreUObject", "Engine", "InputCore", "UMG",
-            "HTTP", "Json", "JsonUtilities", "Networking", "Sockets"
+            "HTTP", "Json", "JsonUtilities", "Networking", "Sockets",
+            /* 여기서부터 GAS 필수 모듈 추가 */
+            "GameplayAbilities", "GameplayTags", "GameplayTasks"
         });
         PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
 
