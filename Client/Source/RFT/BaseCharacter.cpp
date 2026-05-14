@@ -3,7 +3,7 @@
 
 #include "BaseCharacter.h"
 #include "AbilitySystemComponent.h"
-// #include "BaseAttributeSet.h" // 다음 단계에서 만들 클래스이므로 일단 주석 처리
+#include "Base_AttributeSet.h" // 다음 단계에서 만들 클래스이므로 일단 주석 처리
 
 // Sets default values
 ABaseCharacter::ABaseCharacter()
@@ -21,8 +21,7 @@ ABaseCharacter::ABaseCharacter()
 	// 플레이어가 조종하는 캐릭터는 'Mixed' 모드를 권장합니다. (서버 연산 결과를 클라이언트가 부드럽게 예측)
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 
-	// 2. Attribute Set 생성 (현재는 클래스가 없으니 주석 처리)
-	 //AttributeSet = CreateDefaultSubobject<UBaseAttributeSet>(TEXT("AttributeSet"));
+	AttributeSet = CreateDefaultSubobject<UBase_AttributeSet>(TEXT("AttributeSet"));
 
 }
 

@@ -8,7 +8,7 @@
 #include "BaseCharacter.generated.h"
 
 class UAbilitySystemComponent;
-class UBaseAttributeSet; // 나중에 만들 스탯(체력, 마나 등) 클래스
+class UBase_AttributeSet; // 나중에 만들 스탯(체력, 마나 등) 클래스
 
 UCLASS()
 class RFT_API ABaseCharacter : public ACharacter, public IAbilitySystemInterface
@@ -35,14 +35,14 @@ protected:
 	UAbilitySystemComponent* AbilitySystemComponent;
 
 	// 캐릭터의 스탯(HP, MP 등)을 관리하는 컴포넌트
-	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Abilities", meta = (AllowPrivateAccess = "true"))
-	//UBaseAttributeSet* AttributeSet;
+	UPROPERTY(visibleanywhere, BlueprintReadOnly, Category = "abilities", meta = (allowprivateaccess = "true"))
+	UBase_AttributeSet* AttributeSet;
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// IAbilitySystemInterface 필수 구현 함수
+	
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
